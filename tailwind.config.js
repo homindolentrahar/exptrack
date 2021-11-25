@@ -1,11 +1,20 @@
 module.exports = {
+  mode: "jit",
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Poppins", "sans-serif"],
+      },
+    },
   },
   variants: {
-    extend: {},
+    extend: {
+      ringWidth: ["hover", "active"],
+      ringColor: ["hover", "active"],
+      ringOpacity: ["hover", "active"],
+    },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
