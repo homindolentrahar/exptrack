@@ -1,0 +1,34 @@
+{
+    "expenses":[
+        {
+            "id":"c2731762-87eb-491e-9531-dd269db9aa43",
+            "name":"Commission",
+            "amount":23,
+            "date":"1637906676"
+        },
+        {
+            "id": "6a1196b6-4b45-4348-80fd-3fc886f886f5",
+            "name": "Comission",
+            "amount": 34,
+            "date": "1637906676"
+        },
+        {
+            "id": "c598efa9-cae8-4ceb-9717-29c81057293a",
+            "name": "Beli nasi",
+            "amount": -15,
+            "date": "1637906676"
+        },
+        {
+            "id": "07e765b8-6099-4c1f-9c46-c118be402aa4",
+            "name": "Bayar parkir",
+            "amount": -5,
+            "date": "1637906676"
+        },
+        {
+            "id": "1ae24123-a010-49da-8168-b019d28d2944",
+            "name": "Makan burjo",
+            "amount": -12,
+            "date": "1637906676"
+        }
+    ]
+}

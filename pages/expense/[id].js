@@ -20,7 +20,7 @@ const DetailExpense = () => {
   useEffect(() => {
     setName(data.name);
     setAmount(data.amount);
-  }, []);
+  }, [data.name, data.amount]);
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -63,14 +63,13 @@ const DetailExpense = () => {
       </Head>
 
       <div className="w-full flex justify-between">
-        <Link href="/">
+        <Link href="/" passHref={true}>
           <div className="p-3 bg-gray-800 text-white cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-4 w-4"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="w-4 h-4"
             >
               <path
                 fillRule="evenodd"
