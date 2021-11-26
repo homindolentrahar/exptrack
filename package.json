@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "json-server":"json-server --watch db/expenses.json --port 5000"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.3.4",

@@ -1,16 +1,17 @@
 import { v4 as uuidv4 } from "uuid";
-import { useContext, useState } from "react";
-import { GlobalContext } from "../context/GlobalState";
+import { useState } from "react";
+import Head from "next/head";
+import { useRouter } from "next/dist/client/router";
 
-const AddNew = ({ backToExpenses }) => {
-  const { addExpense } = useContext(GlobalContext);
+const New = () => {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [amount, setAmount] = useState(0);
   const [nameError, setNameError] = useState("");
   const [amountError, setAmountError] = useState("");
   const [showError, setShowError] = useState(false);
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
 
     if (name !== "" && parseInt(amount) !== 0) {
@@ -25,8 +26,15 @@ const AddNew = ({ backToExpenses }) => {
         amount: parseInt(amount),
         date: Date.now(),
       };
-      addExpense(data);
-      backToExpenses();
+
+      await fetch("http://localhost:5000/expenses", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      router.push("/");
     } else {
       if (name === "") {
         setNameError("Name your spending!");
@@ -45,7 +53,16 @@ const AddNew = ({ backToExpenses }) => {
 
   return (
     <>
-      <form method="POST" className="w-1/2 flex flex-col items-center gap-8">
+      <form
+        method="POST"
+        className="w-1/2 flex flex-col items-center gap-8 mx-auto my-8"
+        onSubmit={handleSave}
+      >
+        <Head>
+          <title>Add New Expense</title>
+          <meta name="description" content="Add new expense" />
+        </Head>
+
         <div className="w-full flex flex-col gap-4">
           <input
             type="text"
@@ -76,16 +93,12 @@ const AddNew = ({ backToExpenses }) => {
             )}
             <p className="text-gray-400 text-sm text-center">
               Positive amount means{" "}
-              <span className="text-green-500 font-bold">income</span>,{" "}
-              <span className="text-red-500 font-bold">negative</span> one means
-              outcome
+              <span className="text-green-500 font-bold">income</span>, negative
+              one means <span className="text-red-500 font-bold">outcome</span>
             </p>
           </div>
         </div>
-        <button
-          className="w-full p-4 text-white text-lg font-bold bg-red-500 rounded-md hover:bg-red-600 "
-          onClick={handleSave}
-        >
+        <button className="w-full p-4 text-white text-lg font-bold bg-red-500 rounded-md hover:bg-red-600 ">
           Submit
         </button>
       </form>
@@ -93,4 +106,4 @@ const AddNew = ({ backToExpenses }) => {
   );
 };
 
-export default AddNew;
+export default New;

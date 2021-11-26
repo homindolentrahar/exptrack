@@ -1,10 +1,7 @@
-import { useContext } from "react";
-import { GlobalContext } from "../context/GlobalState";
 import BalanceCard from "./BalanceCard";
 import ExpenseItem from "./ExpenseItem";
 
-const Expenses = () => {
-  const { expenses } = useContext(GlobalContext);
+const Expenses = ({ expenses }) => {
   const balance = expenses
     .map((each) => each.amount)
     .reduce((total, each) => (total += each), 0);
@@ -18,7 +15,7 @@ const Expenses = () => {
         </h1>
         <p className="mt-2 text-gray-400 text-sm">Your balance</p>
       </div>
-      <BalanceCard />
+      <BalanceCard expenses={expenses} />
       {expenses.map((data) => (
         <ExpenseItem key={data.id} item={data} />
       ))}

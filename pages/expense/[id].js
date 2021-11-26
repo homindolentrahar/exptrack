@@ -1,15 +1,31 @@
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import Head from "next/head";
-import { useContext } from "react/cjs/react.development";
-import { GlobalContext } from "../../context/GlobalState";
 import { useEffect, useState } from "react";
 
-const DetailExpense = () => {
+export async function getStaticPaths() {
+  const res = await fetch("http://localhost:5000/expenses");
+  const expenses = await res.json();
+
+  const paths = expenses.map((expense) => ({ params: { id: expense.id } }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const res = await fetch(`http://localhost:5000/expenses/${params.id}`);
+  const expense = await res.json();
+
+  return {
+    props: { expense },
+  };
+}
+
+const DetailExpense = ({ expense }) => {
   const router = useRouter();
-  const id = router.query.id;
-  const { expenses, updateExpense, deleteExpense } = useContext(GlobalContext);
-  const data = expenses.find((each) => each.id === id);
 
   const [name, setName] = useState("");
   const [amount, setAmount] = useState(0);
@@ -18,11 +34,11 @@ const DetailExpense = () => {
   const [showError, setShowError] = useState(false);
 
   useEffect(() => {
-    setName(data.name);
-    setAmount(data.amount);
-  }, [data.name, data.amount]);
+    setName(expense.name);
+    setAmount(expense.amount);
+  }, [expense]);
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
 
     if (name !== "" && parseInt(amount) !== 0) {
@@ -32,13 +48,20 @@ const DetailExpense = () => {
       setShowError(false);
 
       const update = {
-        id: data.id,
+        id: expense.id,
         name: name,
         amount: parseInt(amount),
-        date: data.date,
+        date: expense.date,
       };
-      updateExpense(data.id, update);
-      router.back();
+
+      await fetch(`http://localhost:5000/expenses/${update.id}`, {
+        method: "PATCH",
+        body: JSON.stringify(update),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      router.push("/");
     } else {
       if (name === "") {
         setNameError("Name your spending!");
@@ -53,6 +76,14 @@ const DetailExpense = () => {
 
       setShowError(true);
     }
+  };
+
+  const handleDelete = async (id) => {
+    await fetch(`http://localhost:5000/expenses/${id}`, {
+      method: "DELETE",
+    });
+    // deleteExpense(id);
+    router.push("/");
   };
 
   return (
@@ -81,10 +112,7 @@ const DetailExpense = () => {
         </Link>
         <div
           className="p-3 bg-red-50 text-red-500 cursor-pointer hover:bg-red-100"
-          onClick={() => {
-            deleteExpense(id);
-            router.back();
-          }}
+          onClick={() => handleDelete(expense.id)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +130,11 @@ const DetailExpense = () => {
           </svg>
         </div>
       </div>
-      <form method="POST" className="w-full flex flex-col items-center gap-8">
+      <form
+        method="POST"
+        className="w-full flex flex-col items-center gap-8"
+        onSubmit={handleSave}
+      >
         <div className="w-full flex flex-col gap-4">
           <input
             type="text"
@@ -139,10 +171,7 @@ const DetailExpense = () => {
             </p>
           </div>
         </div>
-        <button
-          className="w-full p-4 text-white text-lg font-bold bg-red-500 rounded-md hover:bg-red-600 "
-          onClick={handleSave}
-        >
+        <button className="w-full p-4 text-white text-lg font-bold bg-red-500 rounded-md hover:bg-red-600 ">
           Submit
         </button>
       </form>

@@ -1,8 +1,4 @@
-import { useContext } from "react";
-import { GlobalContext } from "../context/GlobalState";
-
-const BalanceCard = () => {
-  const { expenses } = useContext(GlobalContext);
+const BalanceCard = ({ expenses }) => {
   const income = expenses
     .filter((each) => each.amount > 0)
     .reduce((total, each) => (total += each.amount), 0);

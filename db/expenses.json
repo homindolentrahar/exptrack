@@ -1,34 +1,40 @@
 {
-    "expenses":[
-        {
-            "id":"c2731762-87eb-491e-9531-dd269db9aa43",
-            "name":"Commission",
-            "amount":23,
-            "date":"1637906676"
-        },
-        {
-            "id": "6a1196b6-4b45-4348-80fd-3fc886f886f5",
-            "name": "Comission",
-            "amount": 34,
-            "date": "1637906676"
-        },
-        {
-            "id": "c598efa9-cae8-4ceb-9717-29c81057293a",
-            "name": "Beli nasi",
-            "amount": -15,
-            "date": "1637906676"
-        },
-        {
-            "id": "07e765b8-6099-4c1f-9c46-c118be402aa4",
-            "name": "Bayar parkir",
-            "amount": -5,
-            "date": "1637906676"
-        },
-        {
-            "id": "1ae24123-a010-49da-8168-b019d28d2944",
-            "name": "Makan burjo",
-            "amount": -12,
-            "date": "1637906676"
-        }
-    ]
+  "expenses": [
+    {
+      "id": "6556cee0-c624-4d8c-aa83-c7d6c599c5a2",
+      "name": "Coding commission",
+      "amount": 25,
+      "date": 1637935060201
+    },
+    {
+      "id": "6eacb2a3-6a33-40da-a230-4e9e61a1ab78",
+      "name": "Design commission",
+      "amount": 19,
+      "date": 1637935977306
+    },
+    {
+      "id": "2fe0d556-8502-434f-b77d-09b9dfc08d8a",
+      "name": "New gear",
+      "amount": -22,
+      "date": 1637936002163
+    },
+    {
+      "id": "255d1c46-eac3-41e4-bde9-6f576a2ccadc",
+      "name": "Nasi goreng bang Gojin",
+      "amount": -10,
+      "date": 1637936130440
+    },
+    {
+      "id": "059a03fc-1c5b-477c-806f-a69ca4267072",
+      "name": "Coding commission",
+      "amount": 7,
+      "date": 1637936436307
+    },
+    {
+      "id": "c8b4a292-bf5e-44ac-926b-df9c9268299d",
+      "name": "Beli mie ayam",
+      "amount": -8,
+      "date": 1637936455014
+    }
+  ]
 }
