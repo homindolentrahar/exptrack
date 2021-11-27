@@ -4,10 +4,17 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:5000/expenses");
-  const expenses = await res.json();
+  let expenses;
+  const res = await fetch("http://localhost:3000/api/expenses");
+  const data = await res.json();
 
-  const paths = expenses.map((expense) => ({ params: { id: expense.id } }));
+  if (data.status === "success") {
+    expenses = data.data;
+  } else {
+    expenses = [];
+  }
+
+  const paths = expenses.map((expense) => ({ params: { id: expense._id } }));
 
   return {
     paths,
@@ -16,8 +23,15 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`http://localhost:5000/expenses/${params.id}`);
-  const expense = await res.json();
+  let expense;
+  const res = await fetch(`http://localhost:3000/api/expenses/${params.id}`);
+  const data = await res.json();
+
+  if (data.status === "success") {
+    expense = data.data;
+  } else {
+    expense = {};
+  }
 
   return {
     props: { expense },
@@ -48,19 +62,19 @@ const DetailExpense = ({ expense }) => {
       setShowError(false);
 
       const update = {
-        id: expense.id,
         name: name,
         amount: parseInt(amount),
         date: expense.date,
       };
 
-      await fetch(`http://localhost:5000/expenses/${update.id}`, {
+      await fetch(`http://localhost:3000/api/expenses/${expense._id}`, {
         method: "PATCH",
         body: JSON.stringify(update),
         headers: {
           "Content-Type": "application/json",
         },
       });
+
       router.push("/");
     } else {
       if (name === "") {
@@ -79,10 +93,10 @@ const DetailExpense = ({ expense }) => {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:5000/expenses/${id}`, {
+    await fetch(`http://localhost:3000/api/expenses/${id}`, {
       method: "DELETE",
     });
-    // deleteExpense(id);
+
     router.push("/");
   };
 
@@ -112,7 +126,7 @@ const DetailExpense = ({ expense }) => {
         </Link>
         <div
           className="p-3 bg-red-50 text-red-500 cursor-pointer hover:bg-red-100"
-          onClick={() => handleDelete(expense.id)}
+          onClick={() => handleDelete(expense._id)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

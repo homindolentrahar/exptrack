@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/dist/client/router";
@@ -21,19 +20,18 @@ const New = () => {
       setShowError(false);
 
       const data = {
-        id: uuidv4(),
         name: name,
         amount: parseInt(amount),
-        date: Date.now(),
       };
 
-      await fetch("http://localhost:5000/expenses", {
+      await fetch("http://localhost:3000/api/expenses", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
         },
       });
+
       router.push("/");
     } else {
       if (name === "") {

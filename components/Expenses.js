@@ -17,7 +17,7 @@ const Expenses = ({ expenses }) => {
       </div>
       <BalanceCard expenses={expenses} />
       {expenses.map((data) => (
-        <ExpenseItem key={data.id} item={data} />
+        <ExpenseItem key={data._id} item={data} />
       ))}
     </div>
   );

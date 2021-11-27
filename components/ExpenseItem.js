@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const ExpenseItem = ({ item }) => {
-  const { id, name, amount, date } = item;
+  const { _id: id, name, amount, date } = item;
 
   const formatDate = (timestamp) => {
     return new Date(timestamp).toLocaleDateString();

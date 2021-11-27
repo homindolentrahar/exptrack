@@ -2,8 +2,15 @@ import Head from "next/head";
 import Expenses from "../components/Expenses";
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:5000/expenses");
-  const expenses = await res.json();
+  let expenses;
+  const res = await fetch("http://localhost:3000/api/expenses");
+  const data = await res.json();
+
+  if (data.status === "success") {
+    expenses = data.data;
+  } else {
+    expenses = [];
+  }
 
   return {
     props: { expenses },
